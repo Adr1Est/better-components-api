@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+
+		"strict": true, // Habilitar todas las opciones de comprobación de tipo
+    "moduleDetection": "force", // Forzar la detección de módulos
+    "module": "esnext", // Especificar el sistema de módulos
+    "target": "esnext", // Especificar la version de ECMAScript
+    "allowJs": true, // Permitir archivos .js
+    "esModuleInterop": true, // Habilitar la interoperabilidad de módulos
+    "isolatedModules": true, // Habilitar la comprobación de módulos independientes
+    "paths": {
+      "@/*": ["./src/*"],
+    },
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+	},
+  "include": ["src/**/*"], // Incluir archivos en la compilación
+  "exclude": ["node_modules", "dist"] // Excluir archivos de la compilación
+}
