@@ -64,8 +64,17 @@ export class AuthController {
     const { email, password, username } = req.body;
 
     try {
+      if (!email || !password || !username) {
+        return res.status(400).json({ msg: "Faltan datos obligatorios" });
+      }
       if(!EMAIL_REGEX.test(email)){
         return res.status(400).json({ msg: "El email no es válido" });
+      }
+      if (username.trim().length < 3) {
+        return res.status(400).json({ msg: "El username debe tener al menos 3 caracteres" });
+      }
+      if (password.length < 6) {
+        return res.status(400).json({ msg: "La contraseña debe tener al menos 6 caracteres" });
       }
 
       const existingUser = await AuthModel.findUserByEmail(email);
