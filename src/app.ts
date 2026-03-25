@@ -1,6 +1,6 @@
 import express from "express";
 import cookieParser from "cookie-parser";
-import { corsMiddleware } from "@/middlewares/cors";
+import { corsMiddleware } from "@/middlewares/cors.middleware";
 import { envs } from "@/config/envs";
 import { rootRouter } from "@/routes";
 import { v1Router } from "@/routes/v1";
