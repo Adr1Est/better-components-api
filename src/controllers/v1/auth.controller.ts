@@ -23,12 +23,9 @@ export class AuthController {
         return res.status(404).json({ msg: "El usuario no existe" });
       }
 
-      const userAccount = await AuthModel.findUserAccountById(user.id);
+      const userAccount = await AuthModel.findCredentialsAccountById(user.id);
       if(!userAccount){
-        return res.status(400).json({ msg: "" });
-      }
-      if(userAccount?.provider !== "credentials"){
-        return res.status(400).json({ msg: "El usuario inició sesión con un servicio de terceros"});
+        return res.status(400).json({ msg: "El usuario inició sesión con un servicio de terceros" });
       }
 
       const isPasswordValid = await bcrypt.compare(password, userAccount?.passwordHash!);
