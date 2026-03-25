@@ -84,7 +84,8 @@ export class AuthController {
       });
 
     } catch (error) {
-      
+      console.error("Registration Failed: ", error);
+      return res.status(500).json({ msg: "Registro fallido" });
     }
   }
 }
