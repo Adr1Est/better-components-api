@@ -95,4 +95,21 @@ export class AuthController {
       return res.status(500).json({ msg: "Registro fallido" });
     }
   }
+
+  static logout = async (req: Request, res: Response) => {
+    try {
+      const userId = (req as any).userId;
+      if(userId){
+        await AuthModel.updateRefreshToken(userId, null);
+      }
+
+      res.clearCookie("bettercomps-rt");
+
+      return res.status(200).json({ msg: "Sesión cerrada" });
+
+    } catch (error) {
+      console.error("Logout failed: ", error);
+      return res.status(500).json({ msg: "Fallo al cerrar sesión" });
+    }
+  }
 }

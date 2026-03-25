@@ -35,7 +35,7 @@ export class AuthModel {
     })
   }
   
-  static updateRefreshToken = async (id: string, newToken: string) => {
+  static updateRefreshToken = async (id: string, newToken: string | null) => {
     return await prisma.user.update({
       where: { id },
       data: { refreshToken: newToken },
