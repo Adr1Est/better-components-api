@@ -7,6 +7,12 @@ export class AuthModel {
     });
   }
 
+  static findUserById = async (id: string) =>{
+    return await prisma.user.findUnique({
+      where: { id }
+    });
+  }
+
   static findCredentialsAccountById = async (id: string) => {
     return await prisma.account.findFirst({
       where: { 

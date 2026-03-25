@@ -38,7 +38,7 @@ export class AuthController {
 
       await AuthModel.updateRefreshToken(user.id, refreshToken);
 
-      res.cookie("bettercomps-rt", refreshToken, {
+      res.cookie("bettercomps_rt", refreshToken, {
         httpOnly: true,
         secure: envs.nodeEnv === "production",
         maxAge: 7 * 24 * 60 * 60 * 1000,
@@ -103,13 +103,42 @@ export class AuthController {
         await AuthModel.updateRefreshToken(userId, null);
       }
 
-      res.clearCookie("bettercomps-rt");
+      res.clearCookie("bettercomps_rt");
 
       return res.status(200).json({ msg: "Sesión cerrada" });
 
     } catch (error) {
       console.error("Logout failed: ", error);
       return res.status(500).json({ msg: "Fallo al cerrar sesión" });
+    }
+  }
+
+  static refreshAccessToken = async (req: Request, res: Response) => {
+    try {
+
+      const userId = (req as any).userId;
+      const refreshToken = req.cookies["bettercomps_rt"];
+
+      const user = await AuthModel.findUserById(userId);
+
+      if(!user || !refreshToken){
+        return res.status(401).json({ msg: "Sin autorización" });
+      }
+
+      if(user.refreshToken !== refreshToken){
+        return res.status(401).json({ msg: "Refresh token inválido" });
+      }
+
+      const newAccessToken = generateAccessToken(userId);
+
+      return res.status(200).json({
+        msg: "Solicitud exitosa",
+        token: newAccessToken,
+      });
+
+    } catch (error) {
+      console.error("Refresh Token failed", error);
+      return res.status(500).json({ msg: "Fallo al refrescar token" });
     }
   }
 }
