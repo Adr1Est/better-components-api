@@ -8,6 +8,7 @@ interface Envs {
   jwtSecret: string;
   jwtAccessExpiration?: string;
   jwtRefreshExpiration?: string;
+  saltRounds: number;
 }
 
 export const envs: Envs = {
@@ -18,4 +19,5 @@ export const envs: Envs = {
   jwtSecret: process.env.JWT_SECRET!,
   jwtAccessExpiration: process.env.JWT_ACCESS_EXPIRATION,
   jwtRefreshExpiration: process.env.JWT_REFRESH_EXPIRATION,
+  saltRounds: parseInt(process.env.SALT_ROUNDS!) || 10,
 }

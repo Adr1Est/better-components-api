@@ -20,13 +20,13 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  account       Account?
+  accounts       Account[]
   conversations Conversation[]
 }
 
 model Account {
   id                String @id @default(uuid())
-  userId            String @unique
+  userId            String
   provider          String
   providerAccountId String?
   passwordHash      String?
@@ -36,6 +36,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Conversation {

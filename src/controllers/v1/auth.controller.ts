@@ -59,4 +59,32 @@ export class AuthController {
       return res.status(500).json({ msg: "Error al iniciar sesión" });
     }
   };
+
+  static register = async (req: Request, res: Response) => {
+    const { email, password, username } = req.body;
+
+    try {
+      if(!EMAIL_REGEX.test(email)){
+        return res.status(400).json({ msg: "El email no es válido" });
+      }
+
+      const existingUser = await AuthModel.findUserByEmail(email);
+      if(existingUser){
+        return res.status(409).json({ msg: "El email ya está registrado" });
+      }
+
+      const hashedPassword = await bcrypt.hash(password, envs.saltRounds!);
+
+      const newUser = await AuthModel.createUser(email, username);
+      await AuthModel.createCredentialsUserAccount(newUser.id, hashedPassword);
+
+      return res.status(201).json({
+        msg: "Usuario registrado con formulario",
+        email: newUser.email,
+      });
+
+    } catch (error) {
+      
+    }
+  }
 }
