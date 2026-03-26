@@ -11,6 +11,12 @@ export class ConversationModel {
     });
   }
 
+  static getConversationById = async (id: string) => {
+    return await prisma.conversation.findUnique({
+      where: { id }, 
+    });
+  }
+
   static newConversation = async (id: string, title?: string) => {
     return prisma.conversation.create({
       data: {
