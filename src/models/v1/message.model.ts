@@ -9,12 +9,20 @@ export class MessageModel {
     });
   }
 
-  static newMessage = async (id: string, role: Role, content: string) => {
+  static newMessage = async (
+    id: string, 
+    role: Role, 
+    content: string,
+    componentCode?: string,
+    dependencies?: object,
+  ) => {
     return prisma.message.create({
       data: {
         conversationId: id,
         role,
         content,
+        componentCode,
+        dependencies,
       }
     });
   }
