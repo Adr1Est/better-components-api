@@ -1,0 +1,49 @@
+import { ConversationModel } from "@/models/v1/conversation.model";
+import { UserModel } from "@/models/v1/user.model";
+import { Request, Response } from "express";
+
+export class ConversationController {
+  static getAllConversations = async (req: Request, res: Response) => {
+    try {
+      const conversations = await ConversationModel.getAllConversations();
+      return res.status(200).json({ conversations }); 
+    } catch (error) {
+      console.error("Get all conversations failed: ", error);
+      return res.status(500).json({ msg: "Error al obtener las conversaciones" });
+    }
+  }
+
+  static getConversationsByUser = async (req: Request, res: Response) => {
+    const id = req.params.id as string;
+
+    try {
+      const user = await UserModel.findUserById(id);
+      if(!user){
+        return res.status(404).json({ msg: "Usuario no encontrado" });
+      }
+
+      const userConversations = await ConversationModel.getConversationsByUser(id);
+      return res.status(200).json({ conversations: userConversations });
+    } catch (error) {
+      console.error("Get user conversations failed: ", error);
+      return res.status(500).json({ msg: "Error al obtener las conversaciones del usuario" });
+    }
+  }
+
+  static createConversation = async (req: Request, res: Response) => {
+    const id = req.params.id as string;
+    const { title } = req.body;
+    try {
+      const user = await UserModel.findUserById(id);
+      if(!user){
+        return res.status(404).json({ msg: "Usuario no encontrado" });
+      }
+
+      const conversation = await ConversationModel.newConversation(id, title);
+      return res.status(201).json({ msg: "Nuevo chat creado", conversation });
+    } catch (error) {
+      console.error("Create conversation failed: ", error);
+      return res.status(500).json({ msg: "Error al crear la conversación" });
+    }
+  }
+}
