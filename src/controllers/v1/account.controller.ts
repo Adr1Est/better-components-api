@@ -12,11 +12,11 @@ export class AccountController {
     } 
   }
 
-  static getAccountById = async (req: Request, res: Response) => {
+  static getAccountsByUserId = async (req: Request, res: Response) => {
     const id = req.params.id as string;
 
     try {
-      const account = await AccountModel.findAccountById(id);
+      const account = await AccountModel.findAccountsByUserId(id);
       if(!account){
         return res.status(404).json({ msg: "Registro no encontrado" });
       }

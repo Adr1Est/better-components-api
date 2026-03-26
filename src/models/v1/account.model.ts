@@ -19,7 +19,7 @@ export class AccountModel {
     });
   }
 
-  static findAccountById = async (id: string) => {
+  static findAccountsByUserId = async (id: string) => {
     return prisma.account.findUnique({
       select: {
         id: true,
@@ -34,7 +34,7 @@ export class AccountModel {
         createdAt: true,
         updatedAt: true,
       },
-      where: { id },
+      where: { userId: id },
     });
   }
 }

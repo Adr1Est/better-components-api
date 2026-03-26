@@ -4,4 +4,4 @@ import { Router } from "express";
 export const accountRoutes = Router();
 
 accountRoutes.get("/", AccountController.getAllAccounts);
-accountRoutes.get("/:id", AccountController.getAccountById);
+accountRoutes.get("/:id", AccountController.getAccountsByUserId);
