@@ -134,6 +134,7 @@ export class AuthController {
       return res.status(200).json({
         msg: "Solicitud exitosa",
         token: newAccessToken,
+        id: userId,
       });
 
     } catch (error) {
