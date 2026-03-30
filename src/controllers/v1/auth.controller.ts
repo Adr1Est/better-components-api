@@ -47,7 +47,7 @@ export class AuthController {
 
       return res.status(200).json({
         msg: "Inicio de sesión correcto",
-        email: user.email,
+        id: user.id,
         accessToken,
       });
 
