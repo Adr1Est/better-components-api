@@ -21,6 +21,7 @@ export const corsMiddleware = ({ acceptedOrigins = ACCEPTED_ORIGINS } = {}) => {
       }
 
       return callback(new Error("Origen no permitido"));
-    }
+    },
+    credentials: true,
   });
 }
