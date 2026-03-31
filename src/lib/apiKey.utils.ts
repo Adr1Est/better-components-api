@@ -1,6 +1,7 @@
+import { envs } from "@/config/envs";
 import crypto from "crypto";
 
-const SECRET = process.env.ENCRYPTION_SECRET!;
+const SECRET = envs.encryptionSecret;
 
 export const encrypt = (text: string): string => {
   const iv = crypto.randomBytes(16);
