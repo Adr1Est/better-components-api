@@ -7,6 +7,7 @@ export class UserModel {
         id: true,
         email: true,
         username: true,
+        apiKey: true,
         createdAt: true,
         updatedAt: true,
       }
