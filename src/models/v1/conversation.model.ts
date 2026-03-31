@@ -18,11 +18,17 @@ export class ConversationModel {
   }
 
   static newConversation = async (id: string, title?: string) => {
-    return prisma.conversation.create({
+    return await prisma.conversation.create({
       data: {
         userId: id,
         title,
       }
+    });
+  }
+
+  static deleteConversationById = async (id: string) => {
+    return await prisma.conversation.delete({
+      where: { id },
     });
   }
 }

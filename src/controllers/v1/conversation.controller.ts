@@ -46,4 +46,25 @@ export class ConversationController {
       return res.status(500).json({ msg: "Error al crear la conversación" });
     }
   }
+
+  static deleteConversationById = async (req: Request, res: Response) => {
+    const id = req.params.id as string;
+
+    try {
+      const exists = await ConversationModel.getConversationById(id);
+      if (!exists) {
+        return res.status(404).json({ msg: "El chat no existe" });
+      }
+
+      const conversation = await ConversationModel.deleteConversationById(id);
+
+      return res.status(200).json({ 
+        msg: "Chat borrado con éxito", 
+        title: conversation.title 
+      });
+    } catch (error) {
+      console.error("Error deleting chat: ", error);
+      return res.status(500).json({ msg: "Error interno del servidor" });
+    }
+  }
 }
