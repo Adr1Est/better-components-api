@@ -26,4 +26,16 @@ export class MessageModel {
       }
     });
   }
+
+  static getMessageById = async (id: string) => {
+    return await prisma.message.findUnique({
+      where: { id },
+    });
+  }
+
+  static deleteMessageById = async (id: string) => {
+    return await prisma.message.delete({
+      where: { id },
+    });
+  }
 }

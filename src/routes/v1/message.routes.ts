@@ -5,3 +5,4 @@ export const messageRouter = Router();
 
 messageRouter.get("/:id", MessageController.getMessagesByConversation);
 messageRouter.post("/:id", MessageController.createNewUserMessage);
+messageRouter.delete("/:id", MessageController.deleteMessageById);
