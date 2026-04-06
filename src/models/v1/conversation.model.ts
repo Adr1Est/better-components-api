@@ -31,4 +31,11 @@ export class ConversationModel {
       where: { id },
     });
   }
+
+  static changeTitle = async (id: string, title: string) => {
+    return await prisma.conversation.update({
+      where: { id },
+      data: { title },
+    });
+  }
 }

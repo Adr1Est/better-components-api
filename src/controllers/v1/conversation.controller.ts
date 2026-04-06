@@ -67,4 +67,26 @@ export class ConversationController {
       return res.status(500).json({ msg: "Error interno del servidor" });
     }
   }
+
+  static changeTitle = async (req: Request, res: Response) => {
+    const id = req.params.id as string;
+    const { title: newTitle }= req.body;
+
+    if(!newTitle){
+      return res.status(400).json({ msg: "Faltan datos obligatorios" });
+    }
+
+    try {
+      const exist = await ConversationModel.getConversationById(id);
+      if(!exist){
+        return res.status(404).json({ msg: "El chat no existe" });
+      }
+
+      const chat = await ConversationModel.changeTitle(id, newTitle);
+      return res.status(200).json({ chat });
+    } catch (error) {
+      console.error("Error changing chat title: ", error);
+      return res.status(500).json({ msg: "Error interno del servidor" });
+    }
+  }
 }
