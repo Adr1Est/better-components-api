@@ -55,7 +55,7 @@ model Conversation {
 
 enum Role {
   user
-  assistant
+  model
 }
 
 model Message {
