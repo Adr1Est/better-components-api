@@ -1,8 +1,8 @@
 import { MessageController } from "@/controllers/v1/message.controller";
 import { Router } from "express";
 
-export const messageRouter = Router();
+export const messageRoutes = Router();
 
-messageRouter.get("/:id", MessageController.getMessagesByConversation);
-messageRouter.post("/:id", MessageController.createNewUserMessage);
-messageRouter.delete("/:id", MessageController.deleteMessageById);
+messageRoutes.get("/:id", MessageController.getMessagesByConversation);
+messageRoutes.post("/:id", MessageController.createNewUserMessage);
+messageRoutes.delete("/:id", MessageController.deleteMessageById);
