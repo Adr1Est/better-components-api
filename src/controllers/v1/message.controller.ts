@@ -72,7 +72,7 @@ export class MessageController {
       const responseText = await agent.send(content);
 
       // Guardar respuesta del llm
-      const modelMessage = await MessageModel.newMessage(conversationId, "model", responseText!);
+      const modelMessage = await MessageModel.newLLMMessage(conversationId, "model", responseText!);
 
       // Respuesta del servidor
       return res.status(201).json({

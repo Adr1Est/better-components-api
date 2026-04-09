@@ -27,6 +27,23 @@ export class MessageModel {
     });
   }
 
+  static newLLMMessage = async (
+    id: string, 
+    role: Role, 
+    content: string,
+  ) => {
+    const json = JSON.parse(content);
+    return prisma.message.create({
+      data: {
+        conversationId: id,
+        role,
+        content: json.content,
+        componentCode: json.componentCode,
+        dependencies: json.dependencies,
+      }
+    });
+  }
+
   static getMessageById = async (id: string) => {
     return await prisma.message.findUnique({
       where: { id },
