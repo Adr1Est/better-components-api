@@ -1,5 +1,7 @@
+import { GeminiAgent } from "@/lib/agent";
 import { ConversationModel } from "@/models/v1/conversation.model";
 import { MessageModel } from "@/models/v1/message.model";
+import { UserModel } from "@/models/v1/user.model";
 import { Request, Response } from "express";
 
 export class MessageController {
@@ -21,8 +23,7 @@ export class MessageController {
   }
 
   static createNewUserMessage = async (req: Request, res: Response) => {
-    const id = req.params.id as string;
-    const role = "user";
+    const conversationId = req.params.id as string;
     const { content } = req.body;
 
     if (!content) {
@@ -30,16 +31,58 @@ export class MessageController {
     }
 
     try {
-      const conversation = await ConversationModel.getConversationById(id);
+      // Validar conversación
+      const conversation = await ConversationModel.getConversationById(conversationId);
       if(!conversation){
         return res.status(404).json({ msg: "Conversación no encontrada" });
       }
 
-      const message = await MessageModel.newMessage(id, role, content);
-      return res.status(201).json({ message });
+      // Recuperar API KEY
+      const userId = (req as any).userId;
+      const user = await UserModel.findUserById(userId);
+      if(!user){
+        return res.status(404).json({ msg: "El usuarion no existe" });
+      }
+
+      const apiKey = user.apiKey;
+
+      // Guardar mensaje del usuario en BD
+      const userMessage = await MessageModel.newMessage(conversationId, "user", content);
+
+      // Obtener y dar formato al historial del chat para usarlo en el agente
+      const messages = await MessageModel.getMessagesByConversation(conversationId);
+
+      const previousMessages = messages.slice(0, -1);
+
+      const chatHistory = previousMessages.map((msg) => ({
+        role: msg.role,
+        parts: [{ text: `
+          Mensaje: ${msg.content}
+
+          Componente: ${msg.componentCode ?? ""}
+
+          Dependencias: ${msg.dependencies ?? ""}
+          ` }],
+      }));
+
+      // Crear agente
+      const agent = new GeminiAgent(chatHistory, apiKey!);
+
+      // Llamar a Gemini
+      const responseText = await agent.send(content);
+
+      // Guardar respuesta del llm
+      const modelMessage = await MessageModel.newMessage(conversationId, "model", responseText!);
+
+      // Respuesta del servidor
+      return res.status(201).json({
+        userMessage,
+        modelMessage,
+      });
+
     } catch (error) {
-      console.error("Create user message failed: ", error);
-      return res.status(500).json({ msg: "Error al crear el mensaje" });
+      console.error("Create message with AI failed: ", error);
+      return res.status(500).json({ msg: "Error al procesar el mensaje" });
     }
   }
 
