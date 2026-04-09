@@ -1,4 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
+import { SYSTEM_PROMPT } from "@/lib/agent/systemPrompt";
 
 interface ChatMessage {
   role: string;
@@ -13,6 +14,9 @@ export class GeminiAgent {
 
     this.chat = ai.chats.create({
       model: "gemini-3.1-flash-lite-preview",
+      config: {
+        systemInstruction: SYSTEM_PROMPT,
+      },
       history: chatHistory,
     });
   }
