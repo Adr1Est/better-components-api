@@ -81,3 +81,7 @@ pnpm start   # Ejecutar en producción
 - `@google/genai` - Cliente de Google Gemini
 - `cookie-parser` - Manejo de cookies
 - `cors` - CORS
+
+## Licencia
+
+MIT License - ver archivo [LICENSE](LICENSE)
