@@ -19,6 +19,10 @@ app.use(corsMiddleware());
 app.use("/", rootRouter)
 app.use("/v1", v1Router);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port: ${PORT}`);
-});
+if(envs.nodeEnv !== "production"){
+  app.listen(PORT, () => {
+    console.log(`Server running on port: ${PORT}`);
+  });
+}
+
+export default app;
