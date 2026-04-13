@@ -13,6 +13,6 @@
     },
     "typeRoots": ["./node_modules/@types", "./src/types"],
 	},
-  "include": ["src/**/*"], // Incluir archivos en la compilación
+  "include": ["src/**/*", "*.d.ts"], // Incluir archivos en la compilación
   "exclude": ["node_modules", "dist"] // Excluir archivos de la compilación
 }

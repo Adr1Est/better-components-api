@@ -32,6 +32,9 @@ importers:
       jsonwebtoken:
         specifier: ^9.0.3
         version: 9.0.3
+      node-api-analytics:
+        specifier: ^1.4.1
+        version: 1.4.1
       pg:
         specifier: ^8.20.0
         version: 8.20.0
@@ -1285,6 +1288,10 @@ packages:
   node-addon-api@8.6.0:
     resolution: {integrity: sha512-gBVjCaqDlRUk0EwoPNKzIr9KkS9041G/q31IBShPs1Xz6UTA+EXdZADbzqAJQrpDRq71CIMnOP5VMut3SL0z5Q==}
     engines: {node: ^18 || ^20 || >= 21}
+
+  node-api-analytics@1.4.1:
+    resolution: {integrity: sha512-2HnNgxNgRYeGjLbAdV76AYUr4qfrITGtTdwNFrd0JB60vbIJwkmCKNnIu/sc/TOsPGT4gRZgUJTmfBrlpFKhhw==}
+    engines: {node: '>=18'}
 
   node-domexception@1.0.0:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
@@ -2826,6 +2833,8 @@ snapshots:
   negotiator@1.0.0: {}
 
   node-addon-api@8.6.0: {}
+
+  node-api-analytics@1.4.1: {}
 
   node-domexception@1.0.0: {}
 
