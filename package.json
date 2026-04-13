@@ -1,12 +1,12 @@
 {
   "name": "better-components-api",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "",
   "main": "dist/app.mjs",
   "types": "module",
   "exports": "./dist/app.mjs",
   "scripts": {
-    "build": "pkgroll",
+    "build": "prisma migrate deploy && prisma generate && pkgroll",
     "dev": "tsx watch src/app.ts",
     "start": "node dist/app.mjs"
   },
