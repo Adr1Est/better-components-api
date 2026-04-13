@@ -7,7 +7,7 @@ API REST construída con Express.js y TypeScript. Gestiona conversaciones con IA
 - Node.js (v20+)
 - pnpm
 - Docker (para PostgreSQL en desarrollo)
-- Cuenta en Supabase (para producción)
+- Supabase (para producción)
 
 ## Instalación
 
