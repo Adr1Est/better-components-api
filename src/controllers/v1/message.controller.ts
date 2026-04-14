@@ -82,7 +82,18 @@ export class MessageController {
 
     } catch (error) {
       console.error("Create message with AI failed: ", error);
-      return res.status(500).json({ msg: "Error al procesar el mensaje" });
+
+      const status = error?.status ?? 500;
+
+      const messages: Record<number, string> = {
+        503: "El LLM está experimentando alta demanda. Inténtalo de nuevo más tarde.",
+        429: "Has superado el límite de peticiones. Espera un momento.",
+        401: "API Key inválida o sin permisos.",
+      };
+
+      const msg = messages[status] ?? "Error al procesar el mensaje";
+
+      return res.status(status).json({ msg });
     }
   }
 
