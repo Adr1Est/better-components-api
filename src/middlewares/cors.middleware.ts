@@ -8,10 +8,6 @@ const ACCEPTED_ORIGINS = envs.nodeEnv === 'production'
 export const corsMiddleware = ({ acceptedOrigins = ACCEPTED_ORIGINS } = {}) => {
   return cors ({
     origin: (origin, callback) => {
-      if(envs.nodeEnv === 'development'){
-        console.log(`Origen recibido: ${origin}`);
-      }
-
       if(!origin){
         return callback(null, true);
       }
