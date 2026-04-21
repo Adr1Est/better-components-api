@@ -42,7 +42,7 @@ export class AuthController {
         httpOnly: true,
         secure: envs.nodeEnv === "production",
         maxAge: 7 * 24 * 60 * 60 * 1000,
-        sameSite: "none",
+        sameSite: envs.nodeEnv === "production" ? "none" : "lax",
       });
 
       return res.status(200).json({
