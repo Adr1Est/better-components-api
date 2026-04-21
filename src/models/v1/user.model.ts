@@ -34,4 +34,10 @@ export class UserModel {
 
     return user;
   }
+
+  static deleteUserById = async (id: string) => {
+    return await prisma.user.delete({
+      where: { id }
+    });
+  }
 }

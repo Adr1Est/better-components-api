@@ -5,3 +5,4 @@ export const userRoutes = Router();
 
 userRoutes.get("/", UserController.getAllUsers);
 userRoutes.get("/:id", UserController.getUserById);
+userRoutes.delete("/", UserController.deleteUser);
