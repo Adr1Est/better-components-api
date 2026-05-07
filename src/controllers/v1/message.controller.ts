@@ -24,9 +24,9 @@ export class MessageController {
 
   static createNewUserMessage = async (req: Request, res: Response) => {
     const conversationId = req.params.id as string;
-    const { content } = req.body;
+    const { content, model } = req.body;
 
-    if (!content) {
+    if (!content || !model) {
       return res.status(400).json({ msg: "El contenido del mensaje es obligatorio" });
     }
 
@@ -41,7 +41,7 @@ export class MessageController {
       const userId = (req as any).userId;
       const user = await UserModel.findUserById(userId);
       if(!user){
-        return res.status(404).json({ msg: "El usuarion no existe" });
+        return res.status(404).json({ msg: "El usuario no existe" });
       }
 
       const apiKey = user.apiKey;
@@ -66,7 +66,7 @@ export class MessageController {
       }));
 
       // Crear agente
-      const agent = new GeminiAgent(chatHistory, apiKey!);
+      const agent = new GeminiAgent(chatHistory, apiKey!, model);
 
       // Llamar a Gemini
       const responseText = await agent.send(content);
