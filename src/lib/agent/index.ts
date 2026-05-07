@@ -9,11 +9,11 @@ interface ChatMessage {
 export class GeminiAgent {
   private chat;
 
-  constructor(chatHistory: ChatMessage[], apiKey: string) {
+  constructor(chatHistory: ChatMessage[], apiKey: string, aiModel: string) {
     const ai = new GoogleGenAI({ apiKey });
 
     this.chat = ai.chats.create({
-      model: "gemini-3.1-flash-lite-preview",
+      model: aiModel,
       config: {
         systemInstruction: SYSTEM_PROMPT,
       },
