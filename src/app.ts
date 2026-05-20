@@ -6,7 +6,6 @@ import { rootRouter } from "@/routes";
 import { v1Router } from "@/routes/v1";
 import  { expressAnalytics } from "node-api-analytics";
 
-const PORT: number = envs.port;
 const app = express();
 
 // MIDDLEWARES
