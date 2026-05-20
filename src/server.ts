@@ -28,6 +28,12 @@ io.on("connection", (socket) => {
     io.emit("message", data);
   });
 
+  setTimeout(() => {
+    socket.emit("message", {
+      message: "Mensaje desde backend con 3 seg de retardo",
+    });
+  }, 3000);
+
   socket.on("disconnect", () => {
     console.log(`Cliente desconectado: ${socket.id}`);
   });
