@@ -23,6 +23,9 @@ export const registerMessageSocket = (io: Server, socket: Socket) => {
     try {
       socket.emit("stream:start");
 
+      // Guardar mensaje del usuario
+      const userMessage = await MessageModel.newMessage(conversationId, "user", content);
+
       // Cargar historial y API Key del usuario
       const user = await UserModel.findUserById(userId);
       const apiKey = user?.apiKey;
@@ -31,13 +34,7 @@ export const registerMessageSocket = (io: Server, socket: Socket) => {
       const previousMessages = messages.slice(0, -1);
       const chatHistory = previousMessages.map((msg) => ({
         role: msg.role,
-        parts: [{ text: `
-          Mensaje: ${msg.content}
-
-          Componente: ${msg.componentCode ?? ""}
-
-          Dependencias: ${msg.dependencies ?? ""}
-        ` }],
+        parts: [{ text: `Mensaje: ${msg.content}\nComponente: ${msg.componentCode ?? ""}\nDependencias: ${msg.dependencies ?? ""}` }],
       }));
 
       // Crear agente con historial
